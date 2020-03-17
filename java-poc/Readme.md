@@ -13,3 +13,13 @@ Run the docker image:
 ## Test
 
 GET http://localhost:8080/
+
+POST http://localhost:8080/
+
+```json
+{
+	"firstName": "alejandro",
+	"lastName" : "pereza"
+}
+```
+
