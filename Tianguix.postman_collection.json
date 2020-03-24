@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "91018c78-1789-4613-8e2b-26805010fd0e",
+		"name": "Tianguix",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\":\"oscar\",\n\t\"pass\":\"sergio\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\":\"oscar\",\n\t\"pass\":\"sergio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Purchase Asset",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/purchase",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"purchase"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Purchase Asset Completed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/purchase",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"purchase"
+							]
+						}
+					},
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"PENDING\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Asset",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/asset",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"asset"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Asset Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}
