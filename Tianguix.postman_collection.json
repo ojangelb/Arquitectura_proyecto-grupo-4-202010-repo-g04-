@@ -6,33 +6,11 @@
 	},
 	"item": [
 		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"user\":\"oscar\",\n\t\"pass\":\"sergio\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/login",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"login"
-					]
-				}
-			},
-			"response": [
+			"name": "Matching Engine",
+			"item": [
 				{
-					"name": "Success Login",
-					"originalRequest": {
+					"name": "Login",
+					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -54,49 +32,43 @@
 							]
 						}
 					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": null,
-					"cookie": [],
-					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\"\n}"
-				}
-			]
-		},
-		{
-			"name": "Purchase Asset",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"response": [
+						{
+							"name": "Success Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"user\":\"oscar\",\n\t\"pass\":\"sergio\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\"\n}"
 						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/purchase",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"purchase"
 					]
-				}
-			},
-			"response": [
+				},
 				{
-					"name": "Purchase Asset Completed",
-					"originalRequest": {
+					"name": "Purchase Asset",
+					"request": {
 						"method": "POST",
 						"header": [
 							{
@@ -124,48 +96,48 @@
 							]
 						}
 					},
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": null,
-					"cookie": [],
-					"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"PENDING\"\n}"
-				}
-			]
-		},
-		{
-			"name": "Create Asset",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"response": [
+						{
+							"name": "Purchase Asset Completed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchase",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchase"
+									]
+								}
+							},
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"PENDING\"\n}"
 						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/asset",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"asset"
 					]
-				}
-			},
-			"response": [
+				},
 				{
-					"name": "Create Asset Success",
-					"originalRequest": {
+					"name": "Create Asset",
+					"request": {
 						"method": "POST",
 						"header": [
 							{
@@ -193,14 +165,239 @@
 							]
 						}
 					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": null,
-					"cookie": [],
-					"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
+					"response": [
+						{
+							"name": "Create Asset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
+						}
+					]
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Asset API",
+			"item": [
+				{
+					"name": "Create Asset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Asset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\",\n\t\"state\": \"ACTIVE\",\n\t\"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Read Asset",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Read Asset",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/asset/?type=FINANTIAL_SERVICES&currency=COP&currency_min=100000&currency_max=500000&stock_ammount_min=1&stock_ammount_max=5",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset",
+										""
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "FINANTIAL_SERVICES",
+											"description": "Mandatory field"
+										},
+										{
+											"key": "currency",
+											"value": "COP",
+											"description": "Mandatory field"
+										},
+										{
+											"key": "currency_min",
+											"value": "100000"
+										},
+										{
+											"key": "currency_max",
+											"value": "500000"
+										},
+										{
+											"key": "stock_ammount_min",
+											"value": "1"
+										},
+										{
+											"key": "stock_ammount_max",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "[\n\t{\n\t\t\"name\": \"Ecopetrol\",\n\t\t\"stocks\": \"1000\",\n\t\t\"value\": {\n\t\t\t\"currency\": \"COP\",\n\t\t\t\"ammount\": 1000000\n\t\t},\n\t\t\"type\": \"FINANTIAL_SERVICES\",\n\t\t\"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n\t},\n\t{\n\t\t\"name\": \"Alpina\",\n\t\t\"stocks\": \"250\",\n\t\t\"value\": {\n\t\t\t\"currency\": \"COP\",\n\t\t\t\"ammount\": 20000000\n\t\t},\n\t\t\"type\": \"FINANTIAL_SERVICES\",\n\t\t\"tarder_id\": \"b20f2315-db18-4a62-bb77-7712142594f9\"\n\t}\n]"
+						}
+					]
+				},
+				{
+					"name": "Update Asset",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Asset Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Alpina\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 2000000\n\t},\n\t\"type\": \"FOOD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n    \"name\": \"Ecopetrol 2\",\n    \"stocks\": \"1000\",\n    \"value\": {\n        \"currency\": \"COP\",\n        \"ammount\": 2000000\n    },\n    \"type\": \"FOOD\",\n    \"created_at\": \"1585011420\",\n    \"state\": \"ACTIVE\",\n    \"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
