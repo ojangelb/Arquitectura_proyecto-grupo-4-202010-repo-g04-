@@ -1,4 +1,3 @@
-var bcrypt = require('bcryptjs');
 var User = require('../models/User');
 
 exports.create = function(req, res) {

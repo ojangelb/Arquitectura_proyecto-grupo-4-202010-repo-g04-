@@ -21,8 +21,14 @@ app.use(function (req, res, next) {
     }
 });
 
+var healthcheckRoutes = require('./api/routes/healthcheckRouter');
+healthcheckRoutes(app);
+
 var authRoutes = require('./api/routes/authenticationRouter');
 authRoutes(app);
+
+var assetRoutes = require('./api/routes/assetRouter');
+assetRoutes(app);
 
 app.listen(port, () => {
     console.log(`Tianguix is listening on PORT: ${port}`);
