@@ -11,9 +11,7 @@ Run the images, node-poc and mongo, at the same time:
 
 - Use de the command `docker-compose up`
 
-## Check 
-
-
+If docker-compose takes older versions please use `docker-compose build --no-cache` before `up` command.
 
 ------
 
