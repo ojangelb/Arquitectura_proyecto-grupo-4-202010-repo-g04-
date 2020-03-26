@@ -10,12 +10,24 @@
 			"item": [
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af2b1d2b-bee6-4cf1-ae5a-0bb575984a00",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"user\":\"oscar\",\n\t\"pass\":\"sergio\"\n}",
+							"raw": "{\n\t\"user\": \"oscar\",\n\t\"pass\": \"sergio\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,7 +74,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\"\n}"
+							"body": "{\n    \"auth\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9zY2FyIiwiaWF0IjoxNTg1MjAwMjc5LCJleHAiOjE1ODUyODY2Nzl9.3rXeI2dAAwAxV5vGJW3NTRw0hgav4b9uFrJXfwYSyBo\"\n}"
 						}
 					]
 				},
@@ -204,6 +216,49 @@
 							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\": \"oscar\",\n\t\"pass\": \"sergio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Healthcheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/healthcheck",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"healthcheck"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
