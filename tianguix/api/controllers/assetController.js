@@ -1,8 +1,23 @@
 var Asset = require('../models/Asset');
 
 exports.create = function(req, res) {
-    return Asset.create(null, function(createdAsset){
-        res.send(createdAsset);
+    var assetObject = {
+        name: req.body.name,
+        stocks: req.body.stocks,
+        value : {
+            currency: req.body.value.currency,
+            ammount: req.body.value.ammount
+        },
+        type: req.body.type,
+        trader_id: req.username
+    };
+    return Asset.create(assetObject, function(err, createdAsset){
+        if (createdAsset != null) {
+            res.send(createdAsset);
+        }
+        else {
+            res.status(500).send();
+        }
     });
 };
 
