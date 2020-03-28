@@ -1,6 +1,6 @@
 const numberOfExperiments = 50;
 // Definir cliente HTTP
-const server = "http://e417c914.ngrok.io";
+const server = "http://localhost:8080";
 const authEndpoint = `${server}/login`;
 const createAssetEndpoint = `${server}/asset`;
 const axios = require("axios");
@@ -22,6 +22,7 @@ async function sendRequest(endpoint, data = {}) {
         resolve(res.data);
       })
       .catch(error => {
+        console.log('error', error);
         resolve({ error: error.response ? error.response.data : null });
       });
   });
@@ -32,6 +33,7 @@ function compareObjects(expected, current) {
   Object.keys(expected).forEach(key => {
     if (JSON.stringify(expected[key]) != JSON.stringify(current[key])) {
       equal = false;
+      console.log(JSON.stringify(expected[key]), JSON.stringify(current[key]));
     }
   });
   return equal;
@@ -49,7 +51,7 @@ async function getAuthToken() {
 async function consumeAssetApi() {
   const asset = {
     name: "Ecopetrol",
-    stocks: "1000",
+    stocks: 1000,
     value: {
       currency: "COP",
       ammount: 1000000
@@ -76,7 +78,9 @@ function analiceResults(results) {
   const maxTimeExpected = 1500;
   let timeExceededRequests = 0;
   let apiFailures = 0;
+  let averageResponseTime = 0;
   results.forEach(result => {
+    averageResponseTime += result.time;
     if (result.time > maxTimeExpected) {
       return timeExceededRequests++;
     }
@@ -84,11 +88,13 @@ function analiceResults(results) {
       return apiFailures++;
     }
   });
+  averageResponseTime = averageResponseTime / numberOfExperiments;
   const failures = timeExceededRequests + apiFailures;
   const successPercentage =
     (numberOfExperiments - failures) / numberOfExperiments;
   console.log("results", results);
   console.log("Success Percentage", successPercentage);
+  console.log("Average response time", averageResponseTime);
   console.log("# Total tests", numberOfExperiments);
   console.log("# Total failures", failures);
   console.log("# Failed for response time", timeExceededRequests);
