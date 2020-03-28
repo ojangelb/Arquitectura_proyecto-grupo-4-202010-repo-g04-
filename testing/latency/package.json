@@ -1,0 +1,17 @@
+{
+  "name": "thiangix-testing",
+  "version": "1.0.0",
+  "description": "This is a package to test Thiangix Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "thiangix"
+  ],
+  "author": "Grupo 5",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
