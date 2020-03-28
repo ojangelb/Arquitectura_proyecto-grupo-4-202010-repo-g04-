@@ -9,7 +9,7 @@ services:
     volumes:
       - /data/springboot-docker-compose-app
     ports:
-      - "8080:8080"
+      - "8090:8080"
     depends_on:
       - db
     environment:
