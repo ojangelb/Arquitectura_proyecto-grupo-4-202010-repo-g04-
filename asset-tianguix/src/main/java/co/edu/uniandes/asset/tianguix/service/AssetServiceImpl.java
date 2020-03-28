@@ -30,11 +30,17 @@ public class AssetServiceImpl implements AssetService {
 	// 
 	public ResponseEntity<List<AssetDto>> searchAssetByParams(String type,String currency, Long currency_min,
 			Long currency_max, Integer stock_ammount_min, Integer stock_ammount_max) {
-				
-				if ((currency_min==null)&& (currency_max==null)) {
-					return mapSearchResponseAsset(repository.findByStocksParam(stock_ammount_min,stock_ammount_max,currency));
+		
+			    if ((stock_ammount_min!=null)&& (stock_ammount_max!=null) && (currency_min!=null)&& (currency_max!=null)) {
+				    return mapSearchResponseAsset(repository.findByAllParam(stock_ammount_min,stock_ammount_max,currency_min,currency_max,currency,type));
+				}
+			    else if ((stock_ammount_min!=null)&& (stock_ammount_max!=null)) {
+					return mapSearchResponseAsset(repository.findByStocksParam(stock_ammount_min,stock_ammount_max,currency,type));
+				} else if ((currency_min!=null)&& (currency_max!=null)) {
+					return mapSearchResponseAsset(repository.findByCurrencyParam(currency_min,currency_max,currency,type));
 				} else {
-					return mapSearchResponseAsset(repository.findByCurrencyParam(currency_min,currency_max,currency));
+					//return new ResponseEntity("",HttpStatus.BAD_REQUEST);
+					return null;
 				}
 	}
 	
