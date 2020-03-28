@@ -1,4 +1,5 @@
 var Asset = require('../models/Asset');
+var BookOrder = require('../models/BookOrder');
 
 exports.create = function(req, res) {
     var assetObject = {
@@ -22,11 +23,28 @@ exports.create = function(req, res) {
 };
 
 exports.purchase = function(req, res) {
-    return Asset.read(null, function(filteredAssets){
-        console.log(`Filtered assets: ${JSON.stringify(filteredAssets)}`);
-        res.send({
-            "id": "d526effb-a9f3-4b2c-8e4b-a046280bc479",
-            "status": "PENDING"
+    var filterList = [];
+    req.body.filters.forEach(filter => {
+        filterList.push({
+            type: filter.type,
+            stock_ammount_min: filter.stocks.ammount.min,
+            stock_ammount_max: filter.stocks.ammount.max,
+            currency: filter.value.currency,
+            currency_min: filter.value.min,
+            currency_max: filter.value.max
+        });
+    });
+
+    return Asset.read(filterList, function(filteredAssets){
+
+        var bookOrderObject = {
+            status: 'PENDING',
+            assetList: filteredAssets
+        };
+
+        BookOrder.create(bookOrderObject, function(err, bookOrderCreated){
+            if (err) return res.sendStatus(400);
+            else res.status(201).send(bookOrderCreated);
         });
     });
 }

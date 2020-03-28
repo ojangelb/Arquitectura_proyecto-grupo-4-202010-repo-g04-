@@ -14,5 +14,19 @@ exports.create = function(asset, callback) {
 };
 
 exports.read = function(params, callback) {
-    return callback([]);
+
+    var request = function(filtros) {
+        return axios.get('http://localhost:8090/asset', {
+            params: filtros
+        });
+    };
+
+    var list = params.map( params => request(params));
+
+    axios.all(list)
+        .then(axios.spread(function (...responses) {
+            var data = responses.map(r => r.data);
+            var flattened = [].concat.apply([], data);
+            callback(flattened);
+        }));
 };
