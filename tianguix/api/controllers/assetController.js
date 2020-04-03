@@ -2,14 +2,15 @@ var Asset = require('../models/Asset');
 var BookOrder = require('../models/BookOrder');
 
 exports.create = function(req, res) {
+    const {name, stocks, value, type} = req.body
     var assetObject = {
-        name: req.body.name,
-        stocks: req.body.stocks,
+        name: name,
+        stocks: stocks,
         value : {
-            currency: req.body.value.currency,
-            ammount: req.body.value.ammount
+            currency: value.currency,
+            ammount: value.ammount
         },
-        type: req.body.type,
+        type: type,
         trader_id: req.username
     };
     return Asset.create(assetObject, function(err, createdAsset){

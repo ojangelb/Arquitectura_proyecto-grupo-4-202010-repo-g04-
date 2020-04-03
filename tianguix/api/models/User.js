@@ -36,6 +36,7 @@ userSchema.statics.login = function (requestedUser, callback) {
         }
         bcrypt.compare(requestedUser.pass, dbUser.pass, function (err, result) {
             if (result === true) {
+                console.log(`User ${requestedUser.user} login was successful`);
                 return callback({
                     status: "OK",
                     value: jwt.sign({ id: dbUser.user }, config.key, {
