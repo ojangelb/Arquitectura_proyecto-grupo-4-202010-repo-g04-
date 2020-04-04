@@ -2,7 +2,7 @@
 
 Build the docker image:
 
-- Use de the command `docker build --build-arg JAR_FILE='build/libs/*.jar' -t java-poc .`
+- Use de the command `docker build --build-arg JAR_FILE='build/libs/*.jar' -t asset-tianguix .`
 
 ## Run
 

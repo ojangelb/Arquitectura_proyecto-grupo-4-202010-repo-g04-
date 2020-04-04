@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  java-poc:
-    image: java-poc:latest
+  asset-tianguix:
+    image: asset-tianguix:latest
     build:
       context: ./
       dockerfile: Dockerfile
@@ -26,9 +26,14 @@ services:
       MYSQL_USER: uniandes
       MYSQL_PASSWORD: seneca
       MYSQL_ROOT_PASSWORD: root
-
   adminer:
     image: adminer
     restart: always
     ports:
       - 8081:8080
+
+# Join external networks https://docs.docker.com/compose/networking/#use-a-pre-existing-network
+networks: 
+  default:
+    external: 
+      name: tianguix_tianguix-net

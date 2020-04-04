@@ -3,8 +3,9 @@ var config = require('./../../config/params');
 
 function tokenVerifier(req, res, next) {
     var header = req.headers.authorization;
+    if (!header) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
     var token = header.replace("Bearer ", "");
-    if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
     
     jwt.verify(token, config.key, function(err, decoded) {
         if (err) 

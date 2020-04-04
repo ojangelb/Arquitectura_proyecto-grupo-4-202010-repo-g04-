@@ -6,6 +6,11 @@ services:
       - "8080"
     environment:
       - DB_HOST=mongo
+      - ASSET_HOST=asset-tianguix
+      - ASSET_PORT=8080
+    networks: 
+      - tianguix-net
+      - default
     depends_on:
       - mongo
   mongo:
@@ -20,3 +25,6 @@ services:
       - tianguix
     ports:
       - "8080:4000"
+networks: 
+  tianguix-net:
+    driver: bridge

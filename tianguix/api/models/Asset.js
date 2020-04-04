@@ -1,9 +1,11 @@
 "use strict";
 
 var axios = require('axios');
+var config = require('./../../config/params');
+var baseURL = `http://${config.asset.url}:${config.asset.port}`;
 
 exports.create = function(asset, callback) {
-    axios.post('http://localhost:8090/asset', asset)
+    axios.post(baseURL + `/asset`, asset)
         .then(function (response) {
             callback(null, response.data);
         })
@@ -16,7 +18,7 @@ exports.create = function(asset, callback) {
 exports.read = function(params, callback) {
 
     var request = function(filtros) {
-        return axios.get('http://localhost:8090/asset', {
+        return axios.get(baseURL + `/asset`, {
             params: filtros
         });
     };
