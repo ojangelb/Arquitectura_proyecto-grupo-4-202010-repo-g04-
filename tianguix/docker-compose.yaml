@@ -24,7 +24,7 @@ services:
     depends_on:
       - tianguix
     ports:
-      - "8080:4000"
+      - "80:4000"
 networks: 
   tianguix-net:
     driver: bridge
