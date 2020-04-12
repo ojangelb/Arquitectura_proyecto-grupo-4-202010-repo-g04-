@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "91018c78-1789-4613-8e2b-26805010fd0e",
+		"_postman_id": "6b849c60-7c69-40c7-b217-cdf9fdf18696",
 		"name": "Tianguix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -72,7 +72,7 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"auth\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9zY2FyIiwiaWF0IjoxNTg1MjAwMjc5LCJleHAiOjE1ODUyODY2Nzl9.3rXeI2dAAwAxV5vGJW3NTRw0hgav4b9uFrJXfwYSyBo\"\n}"
 						}
@@ -141,9 +141,83 @@
 							},
 							"code": 201,
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"PENDING\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Matching Status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/matching/1231311",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"matching",
+								"1231311"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Matching status example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/matching/12311",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"matching",
+										"12311"
+									]
+								}
+							},
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"MATCHED\"\n}"
 						}
 					]
 				},
@@ -211,7 +285,7 @@
 							"status": "Created",
 							"code": 201,
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
 						}
@@ -318,7 +392,7 @@
 							"status": "Created",
 							"code": 201,
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\",\n\t\"state\": \"ACTIVE\",\n\t\"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}"
 						}
@@ -387,7 +461,7 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "[\n\t{\n\t\t\"name\": \"Ecopetrol\",\n\t\t\"stocks\": \"1000\",\n\t\t\"value\": {\n\t\t\t\"currency\": \"COP\",\n\t\t\t\"ammount\": 1000000\n\t\t},\n\t\t\"type\": \"FINANTIAL_SERVICES\",\n\t\t\"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n\t},\n\t{\n\t\t\"name\": \"Alpina\",\n\t\t\"stocks\": \"250\",\n\t\t\"value\": {\n\t\t\t\"currency\": \"COP\",\n\t\t\t\"ammount\": 20000000\n\t\t},\n\t\t\"type\": \"FINANTIAL_SERVICES\",\n\t\t\"tarder_id\": \"b20f2315-db18-4a62-bb77-7712142594f9\"\n\t}\n]"
 						}
@@ -445,7 +519,7 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n    \"name\": \"Ecopetrol 2\",\n    \"stocks\": \"1000\",\n    \"value\": {\n        \"currency\": \"COP\",\n        \"ammount\": 2000000\n    },\n    \"type\": \"FOOD\",\n    \"created_at\": \"1585011420\",\n    \"state\": \"ACTIVE\",\n    \"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}"
 						}
