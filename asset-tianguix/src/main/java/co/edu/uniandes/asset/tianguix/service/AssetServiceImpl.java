@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import co.edu.uniandes.asset.tianguix.AssetRepossitory;
 import co.edu.uniandes.asset.tianguix.dto.AssetDto;
 import co.edu.uniandes.asset.tianguix.dto.AssetRsDto;
+import co.edu.uniandes.asset.tianguix.dto.AssetSearchRsDto;
 import co.edu.uniandes.asset.tianguix.dto.ValueAssetDto;
 import co.edu.uniandes.asset.tianguix.entity.AssetEntity;
 import co.edu.uniandes.asset.tianguix.entity.ValueAssetEntity;
@@ -27,7 +28,7 @@ public class AssetServiceImpl implements AssetService {
 		assetEntitySave=repository.save(assetEntity);
 		return mapResponseAsset(assetEntitySave);
 	}
-	// 
+	
 	public ResponseEntity<List<AssetDto>> searchAssetByParams(String type,String currency, Long currency_min,
 			Long currency_max, Integer stock_ammount_min, Integer stock_ammount_max) {
 		
@@ -39,8 +40,7 @@ public class AssetServiceImpl implements AssetService {
 				} else if ((currency_min!=null)&& (currency_max!=null)) {
 					return mapSearchResponseAsset(repository.findByCurrencyParam(currency_min,currency_max,currency,type));
 				} else {
-					//return new ResponseEntity("",HttpStatus.BAD_REQUEST);
-					return null;
+					return new ResponseEntity(HttpStatus.BAD_REQUEST);
 				}
 	}
 	
@@ -104,5 +104,19 @@ public class AssetServiceImpl implements AssetService {
 		assetEntity.setType(assetRqDto.getType());
 		assetEntity.setValueAsset(valueAsset);
 		return assetEntity;
+	}
+	
+	public ResponseEntity<AssetSearchRsDto> searchAssetById (String idAsset)  {
+	    AssetEntity assetEntity = new AssetEntity();
+		assetEntity=repository.findById(idAsset);
+		if(assetEntity != null) {
+			AssetSearchRsDto assetSearchRsDto = new AssetSearchRsDto();
+			assetSearchRsDto.setId(assetEntity.getId());
+			assetSearchRsDto.setState(assetEntity.getState());
+			return new ResponseEntity<>(assetSearchRsDto,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 	}
 }
