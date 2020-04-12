@@ -9,9 +9,11 @@ exports.read = (params, callback) => {
   return axios
     .get(baseURL + `/matching/${matchingId}`)
     .then((response) => {
-      callback(null, response);
+      const {data} = response
+      callback(null, data);
     })
     .catch((error) => {
+      console.log('FAIL', error.response.status);
       callback(error, null);
     });
 };
