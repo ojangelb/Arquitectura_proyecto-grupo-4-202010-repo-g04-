@@ -30,6 +30,9 @@ authRoutes(app);
 var assetRoutes = require('./api/routes/assetRouter');
 assetRoutes(app);
 
+var matchingRoutes = require('./api/routes/matchingRouter');
+matchingRoutes(app);
+
 app.listen(port, () => {
     console.log(`Tianguix is listening on PORT: ${port}`);
     connection().then(() => { console.log("Connected to Mongo!") });

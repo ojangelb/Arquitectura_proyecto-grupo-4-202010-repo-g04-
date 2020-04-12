@@ -6,6 +6,10 @@ const config = {
     'asset': {
         'url': process.env.ASSET_HOST || 'localhost',
         'port': process.env.ASSET_PORT || '8090'
+    },
+    'matching': {
+        'url': process.env.MATCHING_HOST || 'localhost',
+        'port': process.env.MATCHING_PORT || '8090'
     }
 };
 
