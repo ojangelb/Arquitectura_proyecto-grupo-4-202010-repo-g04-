@@ -48,18 +48,36 @@ trait TraderActions extends ActionBase {
     )
 
   val purchase =
-    exec(
-      http("Purchase an asset")
-        .get(purchaseEndpoint)
-        .headers(HttpHeadersValues.tianguixHeaders)
-        .header("Authorization", "Bearer ${access_token}")
-        .body(
-          StringBody(session =>
-            s"""{
-               |}""".stripMargin)
-        ).asJSON
-        .check(
-          status.is(200)
-        )
-    )
+
+      exec(
+        http("Purchase an asset")
+          .post(purchaseEndpoint)
+          .headers(HttpHeadersValues.tianguixHeaders)
+          .header("Authorization", "Bearer ${token}")
+          .body(
+            StringBody("""{
+              "filters": [
+              {
+              "value": {
+                  "currency": "COP",
+                  "min": ${"amount"} ,
+                  "max": 100000000
+              },
+              "stocks": {
+                  "ammount": {
+                      "min": 1,
+                      "max": 3000000
+                  }
+              },
+              "type": "OIL_AND_GAS"
+          }
+      ]
+  })"""
+            )).asJSON
+          .check(
+            status.is(201),
+            regex(""""_id":([^"]*)""").saveAs("id")
+          )
+
+      )
 }

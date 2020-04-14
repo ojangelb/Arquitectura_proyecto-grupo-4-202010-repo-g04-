@@ -16,9 +16,9 @@ import io.gatling.http.Predef.http
 class MatchAsset extends ActionBase with LoginActions with TraderActions {
 
   val httpConf = http.baseURL(conf.getString("baseUrl"))
-  var timeToRampUsers = 10
+  var timeToRampUsers = 2
 
-  val userPerSecondRampOne = 10
+  val userPerSecondRampOne = 2
   val userPerSecondRampTwo = 20
   val userPerSecondRampThree = 30
   val userPerSecondRampFour = 40
@@ -41,8 +41,8 @@ class MatchAsset extends ActionBase with LoginActions with TraderActions {
 
   setUp(
     healthCheckTianguix.inject(
-      constantUsersPerSec(userPerSecondRampOne) during (timeToRampUsers),
-      constantUsersPerSec(userPerSecondRampTwo) during (timeToRampUsers),
+      constantUsersPerSec(userPerSecondRampOne) during (timeToRampUsers)
+      /*constantUsersPerSec(userPerSecondRampTwo) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampThree) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampFour) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampFive) during (timeToRampUsers)
@@ -50,7 +50,7 @@ class MatchAsset extends ActionBase with LoginActions with TraderActions {
       constantUsersPerSec(userPerSecondRampSeven) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampEight) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampNine) during (timeToRampUsers),
-      constantUsersPerSec(userPerSecondRampTen) during (timeToRampUsers)
+      constantUsersPerSec(userPerSecondRampTen) during (timeToRampUsers)*/
     ).protocols(httpConf))
      .assertions(
       global.responseTime.max.lt(maxResponseTimeMs),

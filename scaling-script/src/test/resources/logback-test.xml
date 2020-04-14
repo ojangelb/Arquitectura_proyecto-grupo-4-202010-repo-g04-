@@ -3,16 +3,17 @@
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>../gatling_logs/gatling.log</file>
-        <append>true</append>
+        <append>false</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
         </encoder>
     </appender>
 
     <logger name="io.gatling.http.ahc" level="TRACE" />
+    <logger name="io.gatling.http.engine.response" level="TRACE"/>
 
     <root level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
     </root>
 
 </configuration>
