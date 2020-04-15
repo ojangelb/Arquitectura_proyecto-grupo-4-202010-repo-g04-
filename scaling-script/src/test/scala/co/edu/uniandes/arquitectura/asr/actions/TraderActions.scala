@@ -4,7 +4,7 @@ import co.edu.uniandes.arquitectura.asr.config.ActionBase
 import co.edu.uniandes.arquitectura.asr.utils.TianguixUtils
 import co.edu.uniandes.arquitectura.asr.httpclientconfig.HttpHeadersValues
 import io.gatling.core.Predef.{exec, _}
-import io.gatling.http.Predef.{http, regex, status}
+import io.gatling.http.Predef.{http, regex, jsonPath, status}
 
 /**
   *
@@ -42,7 +42,7 @@ trait TraderActions extends ActionBase {
         .check(
           status.is(200),
           regex(""""stocks":([^"]*)""").saveAs("stocks"),
-          regex(""""ammount":([^"]*)""").saveAs("ammount"),
+          jsonPath("$.value.ammount").saveAs("ammount"),
           regex(""""type":"([^"]*)"""").saveAs("type")
         )
     )
@@ -54,26 +54,26 @@ trait TraderActions extends ActionBase {
           .post(purchaseEndpoint)
           .headers(HttpHeadersValues.tianguixHeaders)
           .header("Authorization", "Bearer ${token}")
-          .body(
-            StringBody("""{
-              "filters": [
-              {
-              "value": {
-                  "currency": "COP",
-                  "min": ${"amount"} ,
-                  "max": 100000000
-              },
-              "stocks": {
-                  "ammount": {
-                      "min": 1,
-                      "max": 3000000
-                  }
-              },
-              "type": "OIL_AND_GAS"
-          }
-      ]
-  })"""
-            )).asJSON
+          .body(StringBody(session =>
+            s"""{
+             | "filters": [
+             |  {
+             |      "value": {
+             |        "currency": "COP",
+             |        "min": ${session("ammount").validate[String].map(i => i.toInt - 2).get},
+             |        "max": ${session("ammount").validate[String].map(i => i.toInt + 2).get}
+             |    },
+             |    "stocks": {
+             |      "ammount": {
+             |        "min": 1,
+             |        "max": 3000000
+             |      }
+             |    },
+             |    "type": "OIL_AND_GAS"
+             |  }
+             |  ]
+             |}""".stripMargin
+          )).asJSON
           .check(
             status.is(201),
             regex(""""_id":([^"]*)""").saveAs("id")
