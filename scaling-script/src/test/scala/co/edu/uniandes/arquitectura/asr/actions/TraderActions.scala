@@ -41,9 +41,9 @@ trait TraderActions extends ActionBase {
         ).asJSON
         .check(
           status.is(200),
-          regex(""""stocks":([^"]*)""").saveAs("stocks"),
           jsonPath("$.value.ammount").saveAs("ammount"),
-          regex(""""type":"([^"]*)"""").saveAs("type")
+          jsonPath("$.stocks").saveAs("stocks"),
+          jsonPath("$.type").saveAs("type")
         )
     )
 
@@ -65,18 +65,18 @@ trait TraderActions extends ActionBase {
              |    },
              |    "stocks": {
              |      "ammount": {
-             |        "min": 1,
-             |        "max": 3000000
+             |        "min": ${session("stocks").validate[String].map(i => i.toInt - 2).get},
+             |        "max": ${session("stocks").validate[String].map(i => i.toInt + 2).get}
              |      }
              |    },
-             |    "type": "OIL_AND_GAS"
+             |    "type": "${session("type").as[String]}"
              |  }
              |  ]
              |}""".stripMargin
           )).asJSON
           .check(
             status.is(201),
-            regex(""""_id":([^"]*)""").saveAs("id")
+            jsonPath("$._id").saveAs("id")
           )
 
       )
