@@ -80,4 +80,15 @@ trait TraderActions extends ActionBase {
           )
 
       )
+
+  val check =
+    exec(
+      http("Check asset")
+        .get(purchaseEndpoint + "/${id}")
+        .headers(HttpHeadersValues.tianguixHeaders)
+        .header("Authorization", "Bearer ${token}")
+        .check(
+          status.is(404)
+        )
+    )
 }

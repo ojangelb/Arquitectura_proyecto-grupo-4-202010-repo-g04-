@@ -36,7 +36,8 @@ class MatchAsset extends ActionBase with LoginActions with TraderActions {
     .exec(
       login,
       sell,
-      purchase
+      purchase,
+      check
     )
 
   setUp(
