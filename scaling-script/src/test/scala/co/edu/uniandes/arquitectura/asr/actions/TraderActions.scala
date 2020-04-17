@@ -20,6 +20,7 @@ trait TraderActions extends ActionBase {
   val utils = new TianguixUtils
   private val assetEndpoint = "/asset"
   private val purchaseEndpoint = "/purchase"
+  private val checkEndpoint = "/matching"
 
   val sell =
     exec(
@@ -84,7 +85,7 @@ trait TraderActions extends ActionBase {
   val check =
     exec(
       http("Check asset")
-        .get(purchaseEndpoint + "/${id}")
+        .get(checkEndpoint + "/${id}")
         .headers(HttpHeadersValues.tianguixHeaders)
         .header("Authorization", "Bearer ${token}")
         .check(
