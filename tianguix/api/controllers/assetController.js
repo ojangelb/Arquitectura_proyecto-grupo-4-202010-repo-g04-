@@ -36,16 +36,29 @@ exports.purchase = function(req, res) {
         });
     });
 
-    return Asset.read(filterList, function(filteredAssets){
+    return Asset.read(filterList, async function(filteredAssets){
 
+        var id = ''; 
         var bookOrderObject = {
             status: 'PENDING',
             assetList: filteredAssets
         };
-
+     
         BookOrder.create(bookOrderObject, function(err, bookOrderCreated){
             if (err) return res.sendStatus(400);
-            else res.status(201).send(bookOrderCreated);
+            else {
+                id = bookOrderCreated["_id"];
+                res.status(201).send(bookOrderCreated);
+            }
+        });
+
+        await new Promise(_ => {
+            setTimeout(function() {
+                BookOrder.findByIdAndUpdate({"_id" : id},{"status": "MATCHED"}, function(err, result){
+                    if(err) console.error(err);
+                    else console.log(result);
+                })
+            }, Math.random() * 1000);
         });
     });
 }

@@ -79,17 +79,23 @@ trait TraderActions extends ActionBase {
             status.is(201),
             jsonPath("$._id").saveAs("id")
           )
+      ).pause(1)
 
-      )
-
-  val check =
+  val checkOnce =
     exec(
       http("Check asset")
         .get(checkEndpoint + "/${id}")
         .headers(HttpHeadersValues.tianguixHeaders)
         .header("Authorization", "Bearer ${token}")
         .check(
-          status.is(404)
+          status.is(200),
+          jsonPath("$.status").saveAs("status")
         )
     )
+
+  val check =
+    exec(checkOnce)
+      .asLongAs(session => session("status").validate[String].get.equals("PENDING")) {
+        exec(checkOnce)
+      }
 }
