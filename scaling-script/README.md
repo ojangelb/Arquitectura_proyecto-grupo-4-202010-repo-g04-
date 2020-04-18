@@ -12,6 +12,7 @@ Add to your `hosts` file (`/private/etc/hosts` in MacOs) the following line:
 
 ```
 mvn gatling:execute -Dgatling.simulationClass=co.edu.uniandes.arquitectura.asr.scenario.HealthCheckTianguix
+mvn gatling:execute -Dgatling.simulationClass=co.edu.uniandes.arquitectura.asr.scenario.MatchAsset
 ```
 
 

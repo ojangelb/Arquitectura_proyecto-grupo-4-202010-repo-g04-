@@ -15,15 +15,16 @@ import io.gatling.http.Predef.http
   */
 class MatchAsset extends ActionBase with LoginActions with TraderActions {
 
-  val httpConf = http.baseURL(conf.getString("baseUrl"))
-  var timeToRampUsers = 10
+  val httpConf = http.baseURL(conf.getString("baseUrl")).disableCaching
+
+  var timeToRampUsers = 5
 
   val userPerSecondRampOne = 10
   val userPerSecondRampTwo = 20
   val userPerSecondRampThree = 30
   val userPerSecondRampFour = 40
   val userPerSecondRampFive = 50
-    val userPerSecondRampSix = 60
+  val userPerSecondRampSix = 60
   val userPerSecondRampSeven = 70
   val userPerSecondRampEight = 80
   val userPerSecondRampNine = 90
@@ -36,20 +37,21 @@ class MatchAsset extends ActionBase with LoginActions with TraderActions {
     .exec(
       login,
       sell,
-      purchase
+      purchase,
+      checkOnce
     )
 
   setUp(
     healthCheckTianguix.inject(
-      constantUsersPerSec(userPerSecondRampOne) during (timeToRampUsers),
+      //constantUsersPerSec(userPerSecondRampOne) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampTwo) during (timeToRampUsers),
-      constantUsersPerSec(userPerSecondRampThree) during (timeToRampUsers),
+      //constantUsersPerSec(userPerSecondRampThree) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampFour) during (timeToRampUsers),
-      constantUsersPerSec(userPerSecondRampFive) during (timeToRampUsers)
+      //constantUsersPerSec(userPerSecondRampFive) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampSix) during (timeToRampUsers),
-      constantUsersPerSec(userPerSecondRampSeven) during (timeToRampUsers),
+      //constantUsersPerSec(userPerSecondRampSeven) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampEight) during (timeToRampUsers),
-      constantUsersPerSec(userPerSecondRampNine) during (timeToRampUsers),
+      //constantUsersPerSec(userPerSecondRampNine) during (timeToRampUsers),
       constantUsersPerSec(userPerSecondRampTen) during (timeToRampUsers)
     ).protocols(httpConf))
      .assertions(

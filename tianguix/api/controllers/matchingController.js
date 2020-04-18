@@ -1,7 +1,7 @@
-var Matching = require("../models/Matching");
+var BookOrder = require('../models/BookOrder');
 
 exports.read = function (req, res) {
-  return Matching.read(req.params, function (err, matchingResult) {
+  return BookOrder.findById(req.params["matchingId"], function (err, matchingResult) {
     if (err) return res.sendStatus(404);
     else res.status(200).send(matchingResult);
   });
