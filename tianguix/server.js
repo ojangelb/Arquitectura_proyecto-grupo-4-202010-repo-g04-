@@ -1,3 +1,11 @@
+var apm = require('elastic-apm-node').start({
+    serviceName: 'Tianguix',
+    secretToken: '',
+  
+    // Set custom APM Server URL (default: http://localhost:8200)
+    serverUrl: `http://${process.env.APM_ADDRESS}:8200`
+  })
+
 var express = require('express'),
     app = express()
     port = process.env.PORT || 8080,

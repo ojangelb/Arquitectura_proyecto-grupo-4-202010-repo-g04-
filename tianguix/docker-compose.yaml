@@ -8,6 +8,7 @@ services:
       - DB_HOST=mongo
       - ASSET_HOST=asset-tianguix
       - ASSET_PORT=8080
+      - APM_ADDRESS=169.254.141.109
     networks: 
       - tianguix-net
       - default
