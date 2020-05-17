@@ -18,7 +18,7 @@ exports.create = function(req, res) {
             res.send(createdAsset);
         }
         else {
-            res.status(500).send();
+            res.status(400).send({err});
         }
     });
 };
