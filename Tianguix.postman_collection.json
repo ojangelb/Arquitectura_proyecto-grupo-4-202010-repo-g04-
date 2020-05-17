@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6b849c60-7c69-40c7-b217-cdf9fdf18696",
+		"_postman_id": "c0e75b3c-d6c7-42b2-a9f2-3371c54df48e",
 		"name": "Tianguix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,9 +14,24 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "af2b1d2b-bee6-4cf1-ae5a-0bb575984a00",
+								"id": "1c6f7c3b-b735-4dba-8184-743e7de8d960",
 								"exec": [
-									"pm.environment.set(\"token\", pm.response.json().token);"
+									"pm.environment.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to have an access token\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.token).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -522,6 +537,916 @@
 							"header": [],
 							"cookie": [],
 							"body": "{\n    \"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n    \"name\": \"Ecopetrol 2\",\n    \"stocks\": \"1000\",\n    \"value\": {\n        \"currency\": \"COP\",\n        \"ammount\": 2000000\n    },\n    \"type\": \"FOOD\",\n    \"created_at\": \"1585011420\",\n    \"state\": \"ACTIVE\",\n    \"tarder_id\": \"77121425-db18-4a62-bb77-b20f231594f9\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Security Tests",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "834ff523-c6ea-4ded-9bee-d278497021d2",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response to have an access token\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.token).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\": \"oscar\",\n\t\"pass\": \"sergio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"user\":\"oscar\",\n\t\"pass\":\"sergio\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"auth\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9zY2FyIiwiaWF0IjoxNTg1MjAwMjc5LCJleHAiOjE1ODUyODY2Nzl9.3rXeI2dAAwAxV5vGJW3NTRw0hgav4b9uFrJXfwYSyBo\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Asset Without Auth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f86424b4-72d4-4647-8b71-db72956d94d9",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 200\", function () {\r",
+									"    pm.response.to.not.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold not have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('undefined');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should contain falsy auth attribute\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.auth).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Asset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Asset With fake Auth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35f1f9d7-71c8-4dff-b8a9-e0f945d71e59",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 200\", function () {\r",
+									"    pm.response.to.not.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold not have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('undefined');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should contain falsy auth attribute\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.auth).to.eql(false);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 12311123111",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Asset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Asset With genuine Auth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "66d86105-15f5-43b1-ae6f-8371248e6e87",
+								"exec": [
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('strinh');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should contain truthy auth attribute\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.auth).to.eql(true);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Asset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Purchase Asset Without Auth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1c707f8d-d5b8-4b99-8f17-59336a196110",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 200\", function () {\r",
+									"    pm.response.to.not.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold not have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('undefined');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should contain falsy auth attribute\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.auth).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/purchase",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"purchase"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Purchase Asset Completed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchase",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchase"
+									]
+								}
+							},
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"PENDING\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Purchase Asset With fake Auth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b280f099-b948-46d0-b7f8-2a1feee1b7d4",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 200\", function () {\r",
+									"    pm.response.to.not.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold not have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('undefined');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should contain falsy auth attribute\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.auth).to.eql(false);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer jernInNFWrnlIRBGLBGRTY843YTGHRUbglbBGREB"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/purchase",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"purchase"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Purchase Asset Completed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchase",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchase"
+									]
+								}
+							},
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"PENDING\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Purchase Asset With genuine Auth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67a1dff7-1995-4975-bdad-49b0235bd47e",
+								"exec": [
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('strinh');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should contain truthy auth attribute\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.auth).to.eql(true);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/purchase",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"purchase"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Purchase Asset Completed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"COP\",\n\t\t\t\t\"min\": 100000,\n\t\t\t\t\"max\": 500000\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 1,\n\t\t\t\t\t\"max\": 5\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"type\": \"FINANTIAL_SERVICES\"\n\t\t},\n\t\t{\n\t\t\t\"value\": {\n\t\t\t\t\"currency\": \"EUR\",\n\t\t\t\t\"min\": 100,\n\t\t\t\t\"max\": 300\n\t\t\t},\n\t\t\t\"stocks\": {\n\t\t\t\t\"ammount\": {\n\t\t\t\t\t\"min\": 10,\n\t\t\t\t\t\"max\": 100\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchase",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchase"
+									]
+								}
+							},
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"d526effb-a9f3-4b2c-8e4b-a046280bc479\",\n    \"status\": \"PENDING\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Asset With alphanumeric data on numeric field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "418f4a77-e2ce-4c37-838c-76fd3d4e15f8",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 200\", function () {\r",
+									"    pm.response.to.not.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold not have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('undefined');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": \"aasd2101ass\"\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Asset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Asset With excesive length alphanumeric data on alpanumeric field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d60ef1a-c87c-4bbc-bc5a-3b11802944b6",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 200\", function () {\r",
+									"    pm.response.to.not.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has valid body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response shold not have name attribute on body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.be.a('undefined');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"EcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrolEcopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/asset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"asset"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Asset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/asset",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"asset"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n\t\"id\": \"f4121425-db18-4f62-bb77-f90f231594b2\",\n\t\"name\": \"Ecopetrol\",\n\t\"stocks\": \"1000\",\n\t\"value\": {\n\t\t\"currency\": \"COP\",\n\t\t\"ammount\": 1000000\n\t},\n\t\"type\": \"OIL_AND_GAS\",\n\t\"created_at\": \"1585011420\"\n}"
 						}
 					]
 				}
